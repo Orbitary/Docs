@@ -36,17 +36,14 @@ export default defineConfig({
 								},
 								{
 									label: 'Paper',
-									badge: { text: 'Paper', variant: 'note' },
 									autogenerate: { directory: 'bits/minecraft/platform/paper' },
 								},
 								{
 									label: 'Velocity',
-									badge: { text: 'Velocity', variant: 'tip' },
 									autogenerate: { directory: 'bits/minecraft/platform/velocity' },
 								},
 								{
 									label: 'Fabric',
-									badge: { text: 'WIP', variant: 'caution' },
 									autogenerate: { directory: 'bits/minecraft/platform/fabric' },
 								},
 							],

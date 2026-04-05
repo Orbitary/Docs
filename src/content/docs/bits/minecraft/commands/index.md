@@ -8,28 +8,45 @@ sidebar:
 Bits provides an annotation-driven wrapper around Mojang's [Brigadier](https://github.com/Mojang/brigadier) library.
 Rather than constructing node trees by hand, you annotate a `BitsCommand` subclass and the framework builds the equivalent Brigadier structure at startup via reflection.
 
-## Processing pipeline
-
-Registration goes through three sequential phases:
-
-| Phase | Class | What it does |
-|---|---|---|
-| Reflection | `BitsCommandBuilder` | Reads annotations and produces an intermediate command description |
-| Argument resolution | `BitsArgumentRegistry` | Maps Java types from method signatures to Brigadier `ArgumentType` instances |
-| Node generation | `BrigadierTreeGenerator` | Assembles `LiteralCommandNode` trees and wires methods as executors |
-
 ## Defining a command
-
-Extend `BitsCommand` and annotate it with `@Command`. The class represents one node in the command tree.
-Nested `static` inner classes that also extend `BitsCommand` become sub-command branches automatically.
+Extend `BitsCommand` and annotate it with `@Command`.
+Nested inner classes also extending `BitsCommand` become sub-command branches automatically.
 ```java
-@Command(value = "teleport", description = "Teleport a player.")
+@Command(value = "teleport", aliases = {"teleporting", "tp2"}, description = "Teleport a player.")
 public class TeleportCommand extends BitsCommand {
+    
+    /**
+     * Teleport to spawn. (/teleport spawn)
+     */
+    @Command("spawn")
+    public void teleportToSpawn(CustomCommandContext ctx) {
+        targetPlayer.teleport(spawnLocation);
+        ctx.respond(Text.of("Teleported " + targetPlayer.getName() + " to spawn"), CommandReturnType.SUCCESS);
+    }
 
+    /**
+     * Player-specific teleport commands. (/teleport <player> ...)
+     */
     @Command
-    public CommandReturnType execute(CustomCommandContext ctx, Player target) {
-        // ...
-        return CommandReturnType.SUCCESS;
+    public final static class PlayerCommands extends BitsCommand {
+        private final Player targetPlayer;
+
+        public PlayerCommands(Player targetPlayer) {
+            this.targetPlayer = targetPlayer;
+        }
+        
+        // Teleport to the target player. (/teleport <player>)
+        @Requirement(PlayerSenderRequirement.class)
+        @Command
+        public void teleportToEntity(CustomCommandContext ctx) {
+            ...
+        }
+        
+        // Teleport the target player to another player. (/teleport <player> <otherPlayer>)
+        @Command
+        public void teleportToEntity(CustomCommandContext ctx, Player entity) {
+            ...
+        }
     }
 }
 ```
@@ -37,42 +54,28 @@ public class TeleportCommand extends BitsCommand {
 The first parameter of every executor method must be a `BitsCommandContext` subtype.
 All subsequent parameters are resolved as typed command arguments via `BitsArgumentRegistry`.
 
-## Annotations
+## Default Annotations
+| Annotation                              | Effect                                                   |
+|-----------------------------------------|----------------------------------------------------------|
+| `@Command(value, aliases, description)` | Names the command node and its aliases                   |
+| `@Requirement({...})`                   | Gates the node behind one or more requirement predicates |
 
-| Annotation | Placement | Effect |
-|---|---|---|
-| `@Command(value, aliases, description)` | Class | Names the command node and its aliases |
-| `@Command` or `@Command("literal")` | Method | Declares an executor; an explicit value creates a named child literal |
-| `@Requirement({...})` | Class or method | Gates the node behind one or more requirement predicates |
-| Method parameter of type `T` | Method parameter | Declares a typed argument resolved via `BitsArgumentRegistry` |
+### Requirements
+COMING SOON...
 
-## `CommandReturnType`
+## Returning
+Every executor method should return a `CommandReturnType`.
+This is not a Brigadier integer return code.
+Instead, it is passed to the context's respond method so your `BitsCommandContext` subclass can format the response accordingly.
 
-Every executor method returns a `CommandReturnType` enum value. This is not a Brigadier integer return code —
-it is passed to the context's respond method so your `BitsCommandContext` subclass can format the response accordingly.
+| Value     | Meaning                               |
+|-----------|---------------------------------------|
+| `SUCCESS` | Command completed as intended         |
+| `INFO`    | Informational output; no state change |
+| `ERROR`   | Command could not complete            |
 
-| Value | Meaning |
-|---|---|
-| `SUCCESS` | Command completed as intended |
-| `INFO` | Informational output; no state change |
-| `ERROR` | Command could not complete |
-
-## `BitsCommandManager`
-
-`BitsCommandManager<S>` is the abstract orchestrator. `S` is the platform's command source type.
-You subclass it per-platform to provide the argument registry, requirement registry, context factory, and registration logic.
-
-It participates in the `CoreManager` lifecycle — call `startup()` during plugin enable and `shutdown()` during disable.
-
+## The `CommandManager`
 See the platform pages for the concrete implementations:
-- [Paper — `PaperBitsCommandManager`](/bits/minecraft/paper)
-- [Velocity — `VelocityBitsCommandManager`](/bits/minecraft/velocity)
-
-## Platform differences
-
-| Capability | Paper | Velocity | Fabric |
-|---|---|---|---|
-| Native player argument type | ✅ `Player` | ✅ `Player` | ✅ |
-| Location argument type | ✅ | ❌ (proxy, no world) | ✅ |
-| Thread dispatch (sync/async) | `Runnables` | `Tasks` | — |
-| Registration target | `CommandDispatcher<CommandSourceStack>` | `CommandManager` | Fabric command API |
+- [Paper `PaperBitsCommandManager`](/bits/minecraft/paper)
+- [Velocity `VelocityBitsCommandManager`](/bits/minecraft/velocity)
+- [Fabric `FabricBitsCommandManager<?>`](/bits/minecraft/fabric)

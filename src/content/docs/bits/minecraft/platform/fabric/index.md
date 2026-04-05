@@ -7,6 +7,4 @@ sidebar:
 draft: true
 ---
 
-Fabric support is currently in development. This page will cover the Fabric-specific
-`BitsConfig` implementation, the Fabric command manager, and any mod-specific utilities
-once the module stabilises.
+COMING SOON...
