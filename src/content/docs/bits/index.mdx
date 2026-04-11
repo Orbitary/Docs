@@ -1,3 +1,117 @@
 ---
-title: Bits
+title: Bits Overview
+description: Learn about the Bits utility library for Minecraft development
 ---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+import PlatformBadge from '../../../components/PlatformBadge.astro';
+
+# Bits - Multi-Platform Minecraft Utility Library
+
+<PlatformBadge platforms={['all']} />
+
+Bits is a comprehensive utility library designed to streamline Minecraft plugin and mod development across multiple platforms. With a unified API, annotation-driven commands, and extensive utilities, Bits helps you write less boilerplate and focus on building great features.
+
+## Why Bits?
+
+<CardGrid>
+  <Card title="Write Once, Deploy Everywhere" icon="puzzle">
+    Single codebase that works across Paper, Velocity, and Fabric platforms.
+  </Card>
+  
+  <Card title="Annotation-Driven Commands" icon="star">
+    Build powerful commands with simple annotations - no manual Brigadier setup required.
+  </Card>
+  
+  <Card title="Rich Utilities" icon="setting">
+    Comprehensive APIs for text formatting, colors, sounds, math, and more.
+  </Card>
+  
+  <Card title="Developer-Friendly" icon="approve-check">
+    Clean, intuitive APIs designed to make your development experience better.
+  </Card>
+</CardGrid>
+
+## Features
+
+### Command Framework
+Build commands with simple annotations that compile to efficient Brigadier commands:
+
+```java
+@Command(name = "teleport")
+@Permission("server.teleport")
+public class TeleportCommand {
+    public void execute(@Sender Player player, Location location) {
+        player.teleport(location);
+    }
+}
+```
+
+### Text Formatting
+Automatic support for MiniMessage and legacy color codes:
+
+```java
+player.sendMessage("<gradient:blue:green>Beautiful gradient text!");
+player.sendMessage("&aLegacy colors work too!");
+```
+
+### Multi-Platform Support
+Write your code once, deploy it everywhere. Bits abstracts platform differences, giving you a unified API.
+
+## Get Started
+
+<CardGrid>
+  <Card title="Installation" icon="rocket">
+    Add Bits to your project with Gradle or Maven
+    
+    [Install →](/bits/getting-started/installation/)
+  </Card>
+  
+  <Card title="Quick Start" icon="star">
+    Build your first multi-platform plugin in minutes
+    
+    [Quick Start →](/bits/getting-started/quick-start/)
+  </Card>
+  
+  <Card title="Core Concepts" icon="open-book">
+    Understand the architecture and design principles
+    
+    [Learn More →](/bits/getting-started/core-concepts/)
+  </Card>
+  
+  <Card title="API Reference" icon="document">
+    Explore the complete API documentation
+    
+    [Browse API →](/bits/api-reference/annotations/)
+  </Card>
+</CardGrid>
+
+## Supported Platforms
+
+<CardGrid>
+  <Card title="Paper" icon="document">
+    <PlatformBadge platforms={['paper']} />
+    
+    Full support for Paper 1.20+ with native API integration.
+  </Card>
+  
+  <Card title="Velocity" icon="rocket">
+    <PlatformBadge platforms={['velocity']} />
+    
+    Complete proxy support for Velocity 3.0+.
+  </Card>
+  
+  <Card title="Fabric" icon="seti:fabric">
+    <PlatformBadge platforms={['fabric']} />
+    
+    Client and server-side support for Fabric.
+  </Card>
+</CardGrid>
+
+## What's Next?
+
+Ready to dive in? Start with the [installation guide](/bits/getting-started/installation/) or explore specific features:
+
+- [Commands Framework](/bits/minecraft/commands/) - Learn about annotation-driven commands
+- [Text Formatting](/bits/core/text-formatting/) - Master rich text and colors
+- [Platform-Specific Features](/bits/minecraft/platform/paper/) - Dive into platform implementations

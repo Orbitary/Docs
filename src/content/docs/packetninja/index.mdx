@@ -1,3 +1,119 @@
 ---
-title: PacketNinja
+title: PacketNinja Overview
+description: Packet interception and logging mod for Minecraft development
 ---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+import ExperimentalBadge from '../../../components/ExperimentalBadge.astro';
+
+# PacketNinja - Packet Debugging for Minecraft
+
+🥷 **PacketNinja** is a powerful utility mod designed to make packet debugging during Minecraft development easier and more intuitive. With beautiful formatting and flexible filtering, understanding packet flow has never been simpler.
+
+## Why PacketNinja?
+
+<CardGrid>
+  <Card title="Beautiful Formatting" icon="star">
+    Pretty-print packets with syntax highlighting and structure visualization.
+  </Card>
+  
+  <Card title="Flexible Filtering" icon="setting">
+    Filter packets by type, direction, or custom rules to focus on what matters.
+  </Card>
+  
+  <Card title="Development Tool" icon="rocket">
+    Built specifically for developers debugging packet behavior.
+  </Card>
+  
+  <Card title="Real-time Logging" icon="approve-check">
+    See packets as they flow with minimal performance impact.
+  </Card>
+</CardGrid>
+
+## Features
+
+### Pretty Packet Formatting
+
+PacketNinja makes packets readable with structured formatting:
+
+```
+[C→S] ServerboundInteractPacket
+├─ Entity ID: 12345
+├─ Action: ATTACK
+└─ Hand: MAIN_HAND
+```
+
+### Supported Packets
+
+Currently supported with full formatting:
+
+**Clientbound:**
+- ClientboundAddEntityPacket
+- ClientboundCustomPayloadPacket
+- ClientboundRemoveEntitiesPacket
+- SetPassengersHandler
+
+**Serverbound:**
+- ServerboundInteractPacket
+- ServerboundPlayerActionPacket
+- ServerboundSwingPacket
+
+:::note[Active Development]
+PacketNinja is under active development. More packet types are being added regularly!
+:::
+
+### Filtering System
+
+<ExperimentalBadge />
+
+Filter packets based on various criteria:
+- Packet type
+- Direction (clientbound/serverbound)
+- Custom filters
+
+## Screenshots
+
+![PacketNinja in action showing formatted packet output](/../assets/houston.webp)
+
+## Get Started
+
+<CardGrid>
+  <Card title="Installation" icon="rocket">
+    Add PacketNinja to your development environment
+    
+    [Install →](/packetninja/getting-started/installation/)
+  </Card>
+  
+  <Card title="Quick Start" icon="star">
+    Start debugging packets in minutes
+    
+    [Quick Start →](/packetninja/getting-started/quick-start/)
+  </Card>
+  
+  <Card title="Features" icon="open-book">
+    Explore packet logging capabilities
+    
+    [Learn More →](/packetninja/features/packet-logging/)
+  </Card>
+  
+  <Card title="Debugging Guide" icon="document">
+    Master packet debugging techniques
+    
+    [Browse Guide →](/packetninja/guides/debugging-packets/)
+  </Card>
+</CardGrid>
+
+## Use Cases
+
+- **Protocol Development** - Understand packet structure and flow
+- **Plugin Debugging** - See exactly what packets your plugin sends/receives
+- **Performance Analysis** - Identify packet spam or bottlenecks
+- **Learning** - Learn how Minecraft networking works
+
+## What's Next?
+
+Ready to start debugging? Begin with the [installation guide](/packetninja/getting-started/installation/) or explore specific features:
+
+- [Packet Logging](/packetninja/features/packet-logging/) - Learn about logging capabilities
+- [Formatting](/packetninja/features/formatting/) - Understand packet formatting
+- [Filtering](/packetninja/features/filtering/) - Master packet filtering

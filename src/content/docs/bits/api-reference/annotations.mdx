@@ -1,0 +1,60 @@
+---
+title: Annotations
+description: Command and event annotations reference
+---
+
+import ComingSoon from '../../../../components/ComingSoon.astro';
+import ApiCard from '../../../../components/ApiCard.astro';
+
+# Annotations Reference
+
+<ComingSoon type="wip" message="Complete annotation reference in development" />
+
+Bits uses annotations to simplify command and event handling. Here's a reference of available annotations.
+
+## Command Annotations
+
+<ApiCard 
+  title="@Command"
+  type="annotation"
+  description="Defines a command class with name, description, and aliases"
+  platforms={['all']}
+/>
+
+<ApiCard 
+  title="@Permission"
+  type="annotation"
+  description="Specifies required permission for command execution"
+  platforms={['all']}
+/>
+
+<ApiCard 
+  title="@Sender"
+  type="annotation"
+  description="Marks a parameter as the command sender"
+  platforms={['all']}
+/>
+
+## Event Annotations
+
+<ApiCard 
+  title="@EventListener"
+  type="annotation"
+  description="Marks a class as an event listener"
+  platforms={['all']}
+/>
+
+<ApiCard 
+  title="@Listen"
+  type="annotation"
+  description="Marks a method as an event handler"
+  platforms={['all']}
+/>
+
+## More Coming Soon
+
+Detailed documentation for each annotation including:
+- Parameters and options
+- Usage examples
+- Platform-specific behavior
+- Best practices

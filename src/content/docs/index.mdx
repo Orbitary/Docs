@@ -1,4 +1,106 @@
 ---
-title: Welcome!
+title: Orbitary Documentation
+description: Documentation for Bits and PacketNinja - Minecraft development utilities
+template: splash
+hero:
+  title: Orbitary Projects
+  tagline: Comprehensive documentation for Bits and PacketNinja - powerful utilities for Minecraft developers
+  image:
+    file: ../../assets/houston.webp
+  actions:
+    - text: Get Started with Bits
+      link: /bits/getting-started/what-is-bits/
+      icon: right-arrow
+      variant: primary
+    - text: Explore PacketNinja
+      link: /packetninja/
+      icon: rocket
+      variant: secondary
+    - text: View on GitHub
+      link: https://github.com/Orbitary
+      icon: external
+      variant: minimal
 ---
-Welcome Page!
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## Projects
+
+<CardGrid stagger>
+  <Card title="💾 Bits" icon="puzzle">
+    A multi-platform Minecraft utility library for Paper, Velocity, and Fabric. Streamline your plugin development with annotation-driven commands, text formatting, and common utilities.
+    
+    [View Documentation →](/bits/)
+  </Card>
+  
+  <Card title="🥷 PacketNinja" icon="rocket">
+    Packet interception and logging mod for Minecraft development. Debug packet communication with beautiful formatting and powerful filtering tools.
+    
+    [View Documentation →](/packetninja/)
+  </Card>
+</CardGrid>
+
+## Key Features
+
+<CardGrid stagger>
+  <Card title="Annotation-Driven Commands" icon="star">
+    Build powerful commands using annotations with full Brigadier support across all platforms. No boilerplate, just clean code.
+  </Card>
+  
+  <Card title="Multi-Platform Support" icon="puzzle">
+    Write once, deploy everywhere. Bits provides a unified API that works seamlessly across Paper, Velocity, and Fabric.
+  </Card>
+  
+  <Card title="Rich Text Formatting" icon="pencil">
+    Automatic text formatting with support for MiniMessage, legacy color codes, and custom formatting rules.
+  </Card>
+  
+  <Card title="Developer Tools" icon="setting">
+    Comprehensive utilities for colors, sounds, locations, items, math operations, and permission management.
+  </Card>
+  
+  <Card title="Packet Debugging" icon="magnifier">
+    Intercept and log Minecraft packets with beautiful formatting, making protocol debugging a breeze.
+  </Card>
+  
+  <Card title="Active Development" icon="rocket">
+    Regular updates and improvements. We're constantly adding new features based on community feedback.
+  </Card>
+</CardGrid>
+
+## Quick Example
+
+```java
+import xyz.bitsquidd.bits.api.command.annotation.Command;
+import xyz.bitsquidd.bits.api.command.annotation.Permission;
+
+@Command(name = "heal")
+@Permission("server.heal")
+public class HealCommand {
+    
+    public void execute(@Sender Player player) {
+        player.setHealth(player.getMaxHealth());
+        player.sendMessage("You have been healed!");
+    }
+}
+```
+
+Simple, powerful, and platform-agnostic. That's the Bits way.
+
+## Getting Started
+
+Choose your project to dive into the documentation:
+
+<CardGrid>
+  <Card title="Bits Documentation" icon="open-book">
+    Learn how to integrate Bits into your project and start building multi-platform plugins.
+    
+    [Get Started →](/bits/getting-started/installation/)
+  </Card>
+  
+  <Card title="PacketNinja Documentation" icon="document">
+    Set up PacketNinja and start debugging Minecraft packets like a pro.
+    
+    [Get Started →](/packetninja/getting-started/installation/)
+  </Card>
+</CardGrid>

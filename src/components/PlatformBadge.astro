@@ -1,0 +1,74 @@
+---
+interface Props {
+	platforms: ('paper' | 'velocity' | 'fabric' | 'all')[];
+}
+
+const { platforms } = Astro.props;
+
+const platformInfo = {
+	paper: { label: 'Paper', color: '#ff6b6b', icon: '📄' },
+	velocity: { label: 'Velocity', color: '#4dabf7', icon: '⚡' },
+	fabric: { label: 'Fabric', color: '#dbc994', icon: '🧵' },
+	all: { label: 'All Platforms', color: '#51cf66', icon: '✓' },
+};
+
+// If 'all' is included, only show that badge
+const displayPlatforms = platforms.includes('all') ? ['all'] : platforms;
+---
+
+<div class="platform-badges">
+	{displayPlatforms.map((platform) => (
+		<span 
+			class="platform-badge" 
+			style={`--platform-color: ${platformInfo[platform].color}`}
+			title={`Supported on ${platformInfo[platform].label}`}
+		>
+			<span class="platform-icon">{platformInfo[platform].icon}</span>
+			<span class="platform-label">{platformInfo[platform].label}</span>
+		</span>
+	))}
+</div>
+
+<style>
+	.platform-badges {
+		display: inline-flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		align-items: center;
+		margin: 0.5rem 0;
+	}
+
+	.platform-badge {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.375rem;
+		padding: 0.375rem 0.75rem;
+		border-radius: 0.375rem;
+		background-color: color-mix(in srgb, var(--platform-color) 15%, transparent);
+		border: 1.5px solid var(--platform-color);
+		font-size: 0.8125rem;
+		font-weight: 600;
+		transition: all 0.2s ease;
+		cursor: default;
+	}
+
+	.platform-badge:hover {
+		background-color: color-mix(in srgb, var(--platform-color) 25%, transparent);
+		transform: translateY(-1px);
+		box-shadow: 0 2px 4px color-mix(in srgb, var(--platform-color) 30%, transparent);
+	}
+
+	.platform-icon {
+		font-size: 1rem;
+		line-height: 1;
+	}
+
+	.platform-label {
+		color: var(--platform-color);
+		filter: brightness(0.9);
+	}
+
+	:global(.theme-dark) .platform-label {
+		filter: brightness(1.2);
+	}
+</style>
